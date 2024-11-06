@@ -36,4 +36,5 @@ public class StartBuildTest extends BaseUiTest {
         softy.assertThat(build.getState()).as("buildState").isEqualTo("finished");
         softy.assertThat(build.getStatus()).as("buildStatus").isEqualTo("SUCCESS");
     }
+
 }
