@@ -2,17 +2,17 @@ name: Deploy frontend
 
 on: workflow_call
 
-# Это лишь примерные степы, как может выглядеть пайплайн фронтенда
+# These are example steps of what a frontend pipeline might look like
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Test frontend
-        run: echo Запускаются юнит тесты и линтеры фронтенда, формируется и публикуется Docker образ
+        run: echo Running unit tests and linters for the frontend, creating and publishing a Docker image
 
   deploy-stage:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Deploy frontend to stage
-        run: echo Происходит деплой фронтенда на стейдж
+        run: echo Deploying the frontend to the staging environment

@@ -2,17 +2,17 @@ name: Deploy backend
 
 on: workflow_call
 
-# Это лишь примерные степы, как может выглядеть пайплайн бэкенда
+# These are example steps of what a backend pipeline might look like
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Build backend
-        run: echo Собирается билд бэкенда \(при сборке прогоняются юнит тесты\), формируется и публикуется Docker образ
+        run: echo Building the backend \(unit tests are executed during the build\), creating and publishing a Docker image
 
   deploy-stage:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Deploy backend to stage
-        run: echo Происходит деплой бэкенда на стейдж
+        run: echo Deploying the backend to the staging environment
