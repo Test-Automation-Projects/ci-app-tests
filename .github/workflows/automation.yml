@@ -40,17 +40,17 @@ jobs:
         run: sed -i "s/^browser=.*/browser=${{ inputs.browser }}/" src/main/resources/config.properties
 
       - name: Run tests
-        # Указываем группу, чтобы еще раз не запустить тесты, которые использовались для сетапа сервера и агента
+        # Specify the group to avoid re-running tests used for server and agent setup
         run: ./mvnw test -Dtest='com.teamcity.${{ inputs.package }}.**' -Dgroups=Regression
 
-      # Создание репорта с покрытием API тестов, основанного на Swagger. Документация: https://github.com/viclovsky/swagger-coverage
-      # Обязательно добавить SwaggerCoverageRestAssured фильтр во все реквесты, как в Specifications.reqBuilder
+      # Generate API test coverage report based on Swagger. Documentation: https://github.com/viclovsky/swagger-coverage
+      # Be sure to add the SwaggerCoverageRestAssured filter to all requests, like in Specifications.reqBuilder
       - name: Run Swagger coverage
-        # Запускается только для API тестов
+        # Only runs for API tests
         if: always() && inputs.package == 'api'
         run: .swagger-coverage-commandline/bin/swagger-coverage-commandline -s http://$HOST:8111/app/rest/swagger.json -i target/swagger-coverage-output
 
-      # Swagger coverage репорт сохраняется в артефакты GitHub Actions прогона
+      # Save the Swagger coverage report as artifacts for the GitHub Actions run
       - name: Save Swagger coverage
         uses: actions/upload-artifact@v4
         if: always() && inputs.package == 'api'
@@ -58,7 +58,7 @@ jobs:
           name: swagger-coverage
           path: swagger-coverage-report.html
 
-      # Сохраняем allure-results в артефакты, чтобы опубликовать результаты всех прогонов вместе в main.yml/report
+      # Save allure-results as artifacts to publish all run results together in main.yml/report
       - name: Save Allure results
         uses: actions/upload-artifact@v4
         if: always()

@@ -6,17 +6,18 @@ jobs:
   allure-report:
     runs-on: ubuntu-latest
     steps:
-      # Выкачиваем все артефакты в одну директорию для формирования одного общего репорта
+      # Download all artifacts into a single directory to generate a unified report
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           path: allure-results
           merge-multiple: true
 
-      # Следующие 3 степа на сохранение Allure репортов с историей и публикацию их в GitHub Pages.
-      # Необходимо ознакомиться с документацией: https://allurereport.org/docs/integrations-github/,
-      # так как есть степы, которые необходимо выполнить вручную в настройках репозитория, чтобы публикация работала корректно.
-      # Рекомендованные степы для создания пустой ветки gh-pages, используемой для публикации репортов: https://gist.github.com/ramnathv/2227408?permalink_comment_id=2915143#gistcomment-2915143
+      # The following 3 steps handle saving Allure reports with history and publishing them to GitHub Pages.
+      # Refer to the documentation: https://allurereport.org/docs/integrations-github/
+      # Some steps must be performed manually in the repository settings to ensure correct publication.
+      # Recommended steps for creating an empty `gh-pages` branch used for publishing reports:
+      # https://gist.github.com/ramnathv/2227408?permalink_comment_id=2915143#gistcomment-2915143
       - name: Load test report history
         uses: actions/checkout@v4
         with:
